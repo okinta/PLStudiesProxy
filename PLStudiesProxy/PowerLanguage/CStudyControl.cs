@@ -39,7 +39,7 @@ namespace PowerLanguage
 
 		private int m_max_seria_index;
 
-		private COutputLog m_output;
+		private IOutput m_output;
 
 		private CAlerts m_alerts;
 
@@ -446,7 +446,7 @@ namespace PowerLanguage
 		}
 
 		/// <summary>
-		/// Read-only property. Returns an interface to access Output Window.
+		/// Returns an interface to access Output Window.
 		/// </summary>
 		public IOutput Output
 		{
@@ -456,11 +456,11 @@ namespace PowerLanguage
 				{
 					throw new ObjectDisposedException("");
 				}
-				if (m_output == null)
-				{
-					m_output = new COutputLog();
-				}
 				return m_output;
+			}
+			protected set
+			{
+				m_output = value;
 			}
 		}
 
