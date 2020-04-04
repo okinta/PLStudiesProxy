@@ -1,0 +1,17 @@
+using Microsoft.VisualC;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace std
+{
+	[StructLayout(LayoutKind.Sequential, Size = 1)]
+	[MiscellaneousBits(64)]
+	[NativeCppClass]
+	[DebugInfoInPDB]
+	internal struct allocator_003C_com_ptr_t_003C_com_IIID_003CITS_StudyServer_003A_003AIStudyServerSink_002C_0026_GUID_e2301b20_4bec_4c6e_be3f_0eee13f79045_003E_0020_003E_0020_003E
+	{
+		public unsafe static void _003CMarshalCopy_003E(allocator_003C_com_ptr_t_003C_com_IIID_003CITS_StudyServer_003A_003AIStudyServerSink_002C_0026_GUID_e2301b20_4bec_4c6e_be3f_0eee13f79045_003E_0020_003E_0020_003E* P_0, allocator_003C_com_ptr_t_003C_com_IIID_003CITS_StudyServer_003A_003AIStudyServerSink_002C_0026_GUID_e2301b20_4bec_4c6e_be3f_0eee13f79045_003E_0020_003E_0020_003E* P_1)
+		{
+		}
+	}
+}

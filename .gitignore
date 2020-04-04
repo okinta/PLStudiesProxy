@@ -1,0 +1,6 @@
+/.vs/*
+/Tests/obj/*
+/Tests/bin/*
+/PLStudiesProxy/obj/*
+/PLStudiesProxy/bin/*
+/PLStudiesProxy/.vs/*

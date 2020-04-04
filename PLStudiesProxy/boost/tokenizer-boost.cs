@@ -1,0 +1,16 @@
+using Microsoft.VisualC;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace boost
+{
+	[StructLayout(LayoutKind.Sequential, Size = 144)]
+	[UnsafeValueType]
+	[DebugInfoInPDB]
+	[NativeCppClass]
+	[MiscellaneousBits(64)]
+	internal struct tokenizer_003Cboost_003A_003Aescaped_list_separator_003Cwchar_t_002Cstd_003A_003Achar_traits_003Cwchar_t_003E_0020_003E_002Cstd_003A_003A_String_const_iterator_003Cwchar_t_002Cstd_003A_003Achar_traits_003Cwchar_t_003E_002Cstd_003A_003Aallocator_003Cwchar_t_003E_0020_003E_002Cstd_003A_003Abasic_string_003Cwchar_t_002Cstd_003A_003Achar_traits_003Cwchar_t_003E_002Cstd_003A_003Aallocator_003Cwchar_t_003E_0020_003E_0020_003E
+	{
+		private long _003Calignment_0020member_003E;
+	}
+}
