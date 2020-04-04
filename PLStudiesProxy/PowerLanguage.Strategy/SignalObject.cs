@@ -19,7 +19,7 @@ namespace PowerLanguage.Strategy
 
 		private COrdersHost m_orders_host;
 
-		private OrdersFactoryImpl m_factory;
+		private IOrderCreator m_factory;
 
 		private ROList<IMarketPosition> m_pos_collection;
 
@@ -81,7 +81,12 @@ namespace PowerLanguage.Strategy
 				{
 					throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Construct (Create method) only.", "OrderCreator"));
 				}
+
 				return m_factory;
+			}
+			set
+			{
+				m_factory = value;
 			}
 		}
 
