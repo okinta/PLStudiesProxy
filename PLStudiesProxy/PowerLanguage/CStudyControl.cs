@@ -486,15 +486,9 @@ namespace PowerLanguage
 		}
 
 		/// <summary>
-		/// Read-only property. Returns base instrument. 
+		/// Returns base instrument.
 		/// </summary>
-		public unsafe IInstrument Bars
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
+		public IInstrument Bars { get; protected set; }
 
 		/// <summary>
 		/// Read-only property. Returns name. 
