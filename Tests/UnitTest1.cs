@@ -1,3 +1,4 @@
+using PowerLanguage;
 using PowerLanguage.Strategy;
 using Xunit;
 
@@ -5,7 +6,8 @@ namespace Tests
 {
     class MyStrategy : SignalObject
     {
-        public bool IsAlive { get; private set; }
+        [Input]
+        public bool IsAlive { get; set; }
 
         public MyStrategy(object _ctx) : base(_ctx)
         {

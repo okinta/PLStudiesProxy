@@ -21,4 +21,10 @@
     <ProjectReference Include="..\PLStudiesProxy\PLStudiesProxy.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="PLTypes">
+      <HintPath>C:\Program Files\TS Support\MultiCharts .NET64\PLTypes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
