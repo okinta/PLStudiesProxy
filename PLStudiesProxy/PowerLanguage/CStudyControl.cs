@@ -43,7 +43,7 @@ namespace PowerLanguage
 
 		private CAlerts m_alerts;
 
-		private CStrategyInfo m_strategy_info;
+		private IStrategyPerformance m_strategy_info;
 
 		private CExecutionInfo m_exec_info;
 
@@ -343,6 +343,10 @@ namespace PowerLanguage
 					return m_strategy_info;
 				}
 				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Initialize (StartCalc method) or Execute (CalcBar method).", "StrategyInfo"));
+			}
+			protected set
+			{
+				m_strategy_info = value;
 			}
 		}
 
