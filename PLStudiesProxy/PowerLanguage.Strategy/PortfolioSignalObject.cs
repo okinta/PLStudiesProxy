@@ -106,7 +106,7 @@ namespace PowerLanguage.Strategy
 			m_impl = null;
 		}
 
-		private unsafe void DelayInit()
+		private void DelayInit()
 		{
 		}
 

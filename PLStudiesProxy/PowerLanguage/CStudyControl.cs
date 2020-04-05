@@ -27,12 +27,6 @@ namespace PowerLanguage
 
 		private int m_ds;
 
-		private unsafe uint** m_cur_ds;
-
-		private unsafe bool* m_is_history;
-
-		private IndexerImpl[] m_indexes;
-
 		private List<PriceSeries> m_prices;
 
 		private PriceSeries m_current_prices;
@@ -41,29 +35,13 @@ namespace PowerLanguage
 
 		private IOutput m_output;
 
-		private CAlerts m_alerts;
-
 		private IStrategyPerformance m_strategy_info;
-
-		private CExecutionInfo m_exec_info;
-
-		private CExecutionControl m_exec_control;
-
-		private CEnvironment m_environment;
-
-		private CExpertCommentary m_expert_commentary;
 
 		private static CSingleton<CSymbolsStorage> m_symbols_storage_host = new CSingleton<CSymbolsStorage>();
 
 		private CSymbolsStorage m_symbols_storage;
 
-		private DataLoaderProxy m_data_loader;
-
-		private CChartCustomDrawBaseStudy m_chart_cust_draw;
-
 		private List<IVariablesControl>[] m_vars_pool;
-
-		private readonly List<IFunctionManageEx> m_functions;
 
 		private ITextDrawingsEx m_text_drawings;
 
@@ -84,8 +62,6 @@ namespace PowerLanguage
 		/// <exclude />
 		private protected EExecutionPhase m_phase;
 
-		private protected unsafe uint* m_calc_reason;
-
 		private bool m_verify_licence_twice_call_detected;
 
 		private bool m_verify_license_check_once;
@@ -98,13 +74,10 @@ namespace PowerLanguage
 
 		private string m_verify_developer_conflict;
 
-		/// <exclude />
-		protected virtual int StudyDataNumber => my_ds();
-
 		/// <summary>
 		/// Read-only property. Provides an interface for accessing current series' TPO data.
 		/// </summary>
-		public unsafe IInstrumentTPO TPOBars
+		public IInstrumentTPO TPOBars
 		{
 			get
 			{
@@ -115,7 +88,7 @@ namespace PowerLanguage
 		/// <summary>
 		/// This string is saved to workspace and loaded from workspace.
 		/// </summary>
-		public unsafe string PersistData
+		public string PersistData
 		{
 			get
 			{
@@ -188,7 +161,7 @@ namespace PowerLanguage
 		/// Read-only property. Returns an interface for accessing the toolbar for the chart that has the study applied.
 		/// Gives access to toolbar <see cref="T:System.Windows.Forms.ToolStrip" />  and lets you set its visibility.
 		/// </summary>
-		public unsafe ICustomToolBar ChartToolBar
+		public ICustomToolBar ChartToolBar
 		{
 			get
 			{
@@ -222,7 +195,7 @@ namespace PowerLanguage
 				{
 					throw new ObjectDisposedException("");
 				}
-				return m_data_loader;
+				throw new NotImplementedException();
 			}
 		}
 
@@ -237,7 +210,7 @@ namespace PowerLanguage
 				{
 					throw new ObjectDisposedException("");
 				}
-				return m_chart_cust_draw;
+				throw new NotImplementedException();
 			}
 		}
 
@@ -256,7 +229,7 @@ namespace PowerLanguage
 				EExecutionPhase phase = m_phase;
 				if (phase != (EExecutionPhase)1 && phase != 0)
 				{
-					return m_expert_commentary;
+					throw new NotImplementedException();
 				}
 				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Initialize (StartCalc method) or Execute (CalcBar method).", "ExpertCommentary"));
 			}
@@ -277,7 +250,7 @@ namespace PowerLanguage
 				EExecutionPhase phase = m_phase;
 				if (phase != (EExecutionPhase)1 && phase != 0)
 				{
-					return m_environment;
+					throw new NotImplementedException();
 				}
 				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Initialize (StartCalc method) or Execute (CalcBar method).", "Environment"));
 			}
@@ -298,7 +271,7 @@ namespace PowerLanguage
 				EExecutionPhase phase = m_phase;
 				if (phase != (EExecutionPhase)1 && phase != 0)
 				{
-					return m_exec_control;
+					throw new NotImplementedException();
 				}
 				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Initialize (StartCalc method) or Execute (CalcBar method).", "ExecControl"));
 			}
@@ -319,7 +292,7 @@ namespace PowerLanguage
 				EExecutionPhase phase = m_phase;
 				if (phase != (EExecutionPhase)1 && phase != 0)
 				{
-					return m_exec_info;
+					throw new NotImplementedException();
 				}
 				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Initialize (StartCalc method) or Execute (CalcBar method).", "ExecInfo"));
 			}
@@ -445,7 +418,7 @@ namespace PowerLanguage
 				{
 					throw new ObjectDisposedException("");
 				}
-				return m_alerts;
+				throw new NotImplementedException();
 			}
 		}
 
@@ -497,7 +470,7 @@ namespace PowerLanguage
 		/// <summary>
 		/// Read-only property. Returns name. 
 		/// </summary>
-		public unsafe string Name
+		public string Name
 		{
 			get
 			{
@@ -508,297 +481,7 @@ namespace PowerLanguage
 		/// <exclude />
 		protected internal IntPtr parent_host_id => m_parent_id;
 
-		/// <exclude />
-		protected internal CStudyAbstract Host => m_master;
-
-		int IStudyControl.StudyDataNumber => throw new NotImplementedException();
-
-		private protected unsafe CStudyControl(CStudyAbstract master, int dataStream)
-		{
-		}
-
-		private void _007ECStudyControl()
-		{
-		}
-
-		private protected void _CallConstruct()
-		{
-			List<IFunctionManageEx>.Enumerator enumerator = m_functions.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.DoConstruct();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected void _CallDestroy()
-		{
-			int num = m_functions.Count - 1;
-			if (num >= 0)
-			{
-				do
-				{
-					m_functions[num].DoDestroy();
-					num += -1;
-				}
-				while (num >= 0);
-			}
-			_reset_prices();
-			m_current_prices?.Dispose();
-			((IDisposable)m_tm)?.Dispose();
-			PowerLanguage.TradeManager.TradeManager.StudyUnsubscribeTM(m_tm_helperID);
-			((IDisposable)m_chart_cust_draw)?.Dispose();
-			m_rect_drawings?.Dispose();
-			m_arrow_drawings?.Dispose();
-			m_tl_drawings?.Dispose();
-			m_text_drawings?.Dispose();
-			CustomToolBar chart_tb = m_chart_tb;
-			if (null != chart_tb)
-			{
-				CustomToolBarsPoolSingle.Instance.Free(chart_tb);
-			}
-			m_chart_tb = null;
-			DataLoaderProxy data_loader = m_data_loader;
-			if (null != data_loader)
-			{
-				data_loader.Free();
-			}
-		}
-
-		private protected unsafe void _PreExecuteImpl()
-		{
-			if (*m_is_history && *m_calc_reason - 3 > 3)
-			{
-				return;
-			}
-			m_current_prices.OnBeforeRTCalc();
-			List<PriceSeries>.Enumerator enumerator = m_prices.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.OnBeforeRTCalc();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected void _Set_ExecState(EExecutionPhase _phase)
-		{
-			m_phase = _phase;
-		}
-
-		private protected unsafe void _Initialize(IInitIndexes* _indexes)
-		{
-		}
-
-		private protected unsafe void _Initialize()
-		{
-		}
-
-		private protected void _Call_Initialize()
-		{
-			verify_impl_check_errors();
-			List<IFunctionManageEx>.Enumerator enumerator = m_functions.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.DoInitialize();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected void _Call_BeforeCalc()
-		{
-			List<IFunctionManageEx>.Enumerator enumerator = m_functions.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.DoBeforeCalcInit();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected void _Call_UnInitialize()
-		{
-			List<IFunctionManageEx>.Enumerator enumerator = m_functions.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.DoUnInitialize();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected unsafe void _CloseBar(int _ds)
-		{
-			if ((IntPtr)0 == (IntPtr)(void*)m_vars_pool.LongLength)
-			{
-				return;
-			}
-			int num = _ds + 1;
-			vars_close_bar(num);
-			int ds = m_ds;
-			uint num2;
-			if (0 == ds)
-			{
-				uint** cur_ds = m_cur_ds;
-				if (0 != *(long*)cur_ds)
-				{
-					num2 = (uint)(*(int*)(*(long*)cur_ds) + 1);
-					goto IL_0037;
-				}
-			}
-			num2 = (uint)ds;
-			goto IL_0037;
-			IL_0037:
-			if (num2 == (uint)num)
-			{
-				vars_close_bar(0);
-			}
-		}
-
-		private protected unsafe void vars_close_bar(int _ds)
-		{
-			List<IVariablesControl>[] vars_pool = m_vars_pool;
-			if ((long)(IntPtr)(void*)vars_pool.LongLength <= (long)_ds)
-			{
-				return;
-			}
-			List<IVariablesControl> list = vars_pool[_ds];
-			if (null == list)
-			{
-				return;
-			}
-			List<IVariablesControl>.Enumerator enumerator = list.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.CloseBar();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected unsafe void _Recovery(int _ds)
-		{
-			if ((IntPtr)0 == (IntPtr)(void*)m_vars_pool.LongLength)
-			{
-				return;
-			}
-			int num = _ds + 1;
-			vars_recovery(num);
-			int ds = m_ds;
-			uint num2;
-			if (0 == ds)
-			{
-				uint** cur_ds = m_cur_ds;
-				if (0 != *(long*)cur_ds)
-				{
-					num2 = (uint)(*(int*)(*(long*)cur_ds) + 1);
-					goto IL_0037;
-				}
-			}
-			num2 = (uint)ds;
-			goto IL_0037;
-			IL_0037:
-			if (num2 == (uint)num)
-			{
-				vars_recovery(0);
-			}
-		}
-
-		private protected unsafe void vars_recovery(int _ds)
-		{
-			List<IVariablesControl>[] vars_pool = m_vars_pool;
-			if ((long)(IntPtr)(void*)vars_pool.LongLength <= (long)_ds)
-			{
-				return;
-			}
-			List<IVariablesControl> list = vars_pool[_ds];
-			if (null == list)
-			{
-				return;
-			}
-			List<IVariablesControl>.Enumerator enumerator = list.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current.Recovery();
-				}
-				while (enumerator.MoveNext());
-			}
-		}
-
-		private protected void _set_parent_host_id(IntPtr _parent_id)
-		{
-			m_parent_id = _parent_id;
-		}
-
-		private protected void _set_tech_id(StudyID _tech_id)
-		{
-			m_tech_id = _tech_id;
-		}
-
-		internal unsafe int my_ds()
-		{
-			int ds = m_ds;
-			if (0 == ds)
-			{
-				uint** cur_ds = m_cur_ds;
-				if (0 != *(long*)cur_ds)
-				{
-					return *(int*)(*(long*)cur_ds) + 1;
-				}
-			}
-			return ds;
-		}
-
-		private void _reset_prices()
-		{
-			List<PriceSeries>.Enumerator enumerator = m_prices.GetEnumerator();
-			if (enumerator.MoveNext())
-			{
-				do
-				{
-					enumerator.Current?.Dispose();
-				}
-				while (enumerator.MoveNext());
-			}
-			m_prices.Clear();
-		}
-
-		private unsafe List<IVariablesControl> access_vars(int _ds)
-		{
-			List<IVariablesControl>[] vars_pool = m_vars_pool;
-			List<IVariablesControl> list;
-			if ((long)(IntPtr)(void*)vars_pool.LongLength > (long)_ds)
-			{
-				list = vars_pool[_ds];
-				if (null != list)
-				{
-					return list;
-				}
-			}
-			else
-			{
-				Array.Resize(ref m_vars_pool, _ds + 1);
-			}
-			list = new List<IVariablesControl>();
-			m_vars_pool[_ds] = list;
-			return list;
-		}
+		public int StudyDataNumber => throw new NotImplementedException();
 
 		protected void _check_for_disposed()
 		{
@@ -806,12 +489,6 @@ namespace PowerLanguage
 			{
 				throw new ObjectDisposedException("");
 			}
-		}
-
-		/// <exclude />
-		private protected unsafe IBaseStudy* host()
-		{
-			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -897,11 +574,11 @@ namespace PowerLanguage
 			return seria_impl(data_stream);
 		}
 
-		private unsafe void verify_impl_check_errors()
+		private void verify_impl_check_errors()
 		{
 		}
 
-		private unsafe void ScrollToBar(int dataN, int barN)
+		private void ScrollToBar(int dataN, int barN)
 		{
 		}
 
@@ -911,12 +588,12 @@ namespace PowerLanguage
 			this.ScrollToBar(dataN, barN);
 		}
 
-		private unsafe PriceSeries seria_impl(int data_stream)
+		private PriceSeries seria_impl(int data_stream)
 		{
 			throw new NotImplementedException();
 		}
 
-		private unsafe void CommandLine(string command)
+		private void CommandLine(string command)
 		{
 		}
 
@@ -999,71 +676,14 @@ namespace PowerLanguage
 			return CreateSeriesVar(default(T), 0);
 		}
 
-		private unsafe Indexator GetIndexer(int _data_stream)
-		{
-			uint num;
-			if (0 == _data_stream)
-			{
-				int ds = m_ds;
-				if (0 == ds)
-				{
-					uint** cur_ds = m_cur_ds;
-					if (0 != *(long*)cur_ds)
-					{
-						num = (uint)(*(int*)(*(long*)cur_ds) + 1);
-						goto IL_0026;
-					}
-				}
-				num = (uint)ds;
-				goto IL_0026;
-			}
-			return m_indexes[_data_stream];
-			IL_0026:
-			return m_indexes[num];
-		}
-
 		Indexator IStudyControl.GetIndexer(int _data_stream)
 		{
-			//ILSpy generated this explicit interface implementation from .override directive in GetIndexer
-			return this.GetIndexer(_data_stream);
-		}
-
-		private void AddVariable(IVariablesControl _var, int _data_stream)
-		{
-			EExecutionPhase phase = m_phase;
-			if (phase != (EExecutionPhase)1 && phase != 0)
-			{
-				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Construct (Create method) only.", "AddVariable"));
-			}
-			access_vars(_data_stream).Add(_var);
+			throw new NotImplementedException();
 		}
 
 		void IStudyControl.AddVariable(IVariablesControl _var, int _data_stream)
 		{
-			//ILSpy generated this explicit interface implementation from .override directive in AddVariable
-			this.AddVariable(_var, _data_stream);
-		}
-
-		private void AddFunction(IFunctionAbstract _func)
-		{
-			EExecutionPhase phase = m_phase;
-			if (phase != (EExecutionPhase)1 && phase != 0)
-			{
-				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Construct (Create method) only.", "AddFunction"));
-			}
-			m_functions.Add(_func as IFunctionManageEx);
-		}
-
-		void IStudyControl.AddFunction(IFunctionAbstract _func)
-		{
-			//ILSpy generated this explicit interface implementation from .override directive in AddFunction
-			this.AddFunction(_func);
-		}
-
-		[return: MarshalAs(UnmanagedType.U1)]
-		internal unsafe bool IsRTCalcReason()
-		{
-			return (*m_calc_reason - 3 <= 3) ? true : false;
+			throw new NotImplementedException();
 		}
 
 		protected virtual void Dispose([MarshalAs(UnmanagedType.U1)] bool P_0)
@@ -1075,6 +695,11 @@ namespace PowerLanguage
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
+		}
+
+		public void AddFunction(IFunctionAbstract func)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace PowerLanguage
 	/// <summary>
 	/// Class that describes a function object.
 	/// </summary>
-	public abstract class FunctionObject<T> : CStudyControl, IFunctionObject<T>, IStudy, IFunctionManageEx
+	public abstract class FunctionObject<T> : CStudyControl, IFunctionObject<T>, IStudy
 	{
 		/// <exclude />
 		protected bool m_calculated;
@@ -48,7 +48,7 @@ namespace PowerLanguage
 		/// <summary>
 		/// Initializes a new instance of the FunctionObject class.
 		/// </summary>
-		public unsafe FunctionObject(CStudyControl _master, [MarshalAs(UnmanagedType.U1)] bool _is_series, int _ds) : base(null, 0)
+		public FunctionObject(CStudyControl _master, [MarshalAs(UnmanagedType.U1)] bool _is_series, int _ds)
 		{
 		}
 
@@ -92,7 +92,7 @@ namespace PowerLanguage
 			throw new NotImplementedException();
 		}
 
-		private unsafe void _007EFunctionObject_00601()
+		private void _007EFunctionObject_00601()
 		{
 		}
 
@@ -174,56 +174,6 @@ namespace PowerLanguage
 			{
 				base.Dispose(false);
 			}
-		}
-
-		internal unsafe void DoInitializeVars(IInitIndexes* _indexes)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoInitialize()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoBeforeCalcInit()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoUnInitialize()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoFakeExecute()
-		{
-			throw new NotImplementedException();
-		}
-
-		unsafe void IFunctionManageEx.DoInitializeVars(IInitIndexes* _indexes)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoCloseBarVars(int _ds)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoRecoveryVars(int _ds)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoConstruct()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IFunctionManageEx.DoDestroy()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

@@ -15,10 +15,6 @@ namespace PowerLanguage.Strategy
 	/// </summary>
 	public abstract class SignalObject : CStudyAbstract, IStrategy
 	{
-		private unsafe IStrategyOrders* m_impl;
-
-		private COrdersHost m_orders_host;
-
 		private IOrderCreator m_factory;
 
 		private ROList<IMarketPosition> m_pos_collection;
@@ -34,7 +30,7 @@ namespace PowerLanguage.Strategy
 		/// perLot,
 		/// perPosition.
 		/// </summary>
-		protected unsafe ESpecOrdersMode CurSpecOrdersMode
+		protected ESpecOrdersMode CurSpecOrdersMode
 		{
 			get
 			{
@@ -46,24 +42,6 @@ namespace PowerLanguage.Strategy
 			}
 			set
 			{
-				//IL_0035: Expected I, but got I8
-				//IL_004b: Expected I, but got I8
-				if (m_phase != (EExecutionPhase)3)
-				{
-					throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Execute (CalcBar method) only.", "CurSpecOrdersMode"));
-				}
-				if (value == ESpecOrdersMode.PerContract)
-				{
-					IStrategyOrders* impl = m_impl;
-					IStrategyOrders* intPtr = impl;
-					/*OpCode not supported: CallIndirect*/;
-				}
-				else
-				{
-					IStrategyOrders* impl = m_impl;
-					IStrategyOrders* intPtr2 = impl;
-					/*OpCode not supported: CallIndirect*/;
-				}
 				m_cur_order_mode = value;
 			}
 		}
@@ -94,7 +72,7 @@ namespace PowerLanguage.Strategy
 		/// Set calculated fitness value. This method may be used during strategy optimization
 		/// to pass custom calculated optimization criteria value.
 		/// </summary>
-		protected unsafe double CustomFitnessValue
+		protected double CustomFitnessValue
 		{
 			set
 			{
@@ -103,8 +81,6 @@ namespace PowerLanguage.Strategy
 				EExecutionPhase phase = m_phase;
 				if (phase != (EExecutionPhase)1 && phase != 0)
 				{
-					IStrategyOrders* impl = m_impl;
-					/*OpCode not supported: CallIndirect*/;
 					return;
 				}
 				throw new ExecuteStudyException(string.Format("Unaccessible property(method): {0}. Initialize (StartCalc method) or Execute (CalcBar method).", "CustomFitnessValue"));
@@ -114,7 +90,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns current trading profile name.
 		/// </summary>
-		public unsafe string Profile
+		public string Profile
 		{
 			get
 			{
@@ -125,7 +101,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns current account name.
 		/// </summary>
-		public unsafe string Account
+		public string Account
 		{
 			get
 			{
@@ -136,7 +112,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns currency code from Strategy settings (Base Currency)
 		/// </summary>
-		public unsafe MTPA_MCSymbolCurrency StrategyCurrencyCode
+		public MTPA_MCSymbolCurrency StrategyCurrencyCode
 		{
 			get
 			{
@@ -147,7 +123,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns 'Interest Rate' from the Strategy Properties window.
 		/// </summary>
-		public unsafe double InterestRate
+		public double InterestRate
 		{
 			get
 			{
@@ -158,7 +134,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns 'Initial Capital' from the Strategy Properties window.
 		/// </summary>
-		public unsafe double InitialCapital
+		public double InitialCapital
 		{
 			get
 			{
@@ -169,7 +145,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns 'Slippage' from the Strategy Properties window.
 		/// </summary>
-		public unsafe double Slippage
+		public double Slippage
 		{
 			get
 			{
@@ -180,7 +156,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns 'Commission' from the Strategy Properties window.
 		/// </summary>
-		public unsafe double Commission
+		public double Commission
 		{
 			get
 			{
@@ -191,7 +167,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Return total number of trades.
 		/// </summary>
-		public unsafe int TotalTrades
+		public int TotalTrades
 		{
 			get
 			{
@@ -202,7 +178,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns the total number of bars during which winning trades were open.
 		/// </summary>
-		public unsafe int TotalBarsWinTrades
+		public int TotalBarsWinTrades
 		{
 			get
 			{
@@ -213,7 +189,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns the total number of bars during which losing trades were open.
 		/// </summary>
-		public unsafe int TotalBarsLosTrades
+		public int TotalBarsLosTrades
 		{
 			get
 			{
@@ -224,7 +200,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns the total number of bars during which even trades (without profit and loss) were open.
 		/// </summary>
-		public unsafe int TotalBarsEvenTrades
+		public int TotalBarsEvenTrades
 		{
 			get
 			{
@@ -236,7 +212,7 @@ namespace PowerLanguage.Strategy
 		/// Returns a ratio of profitable trades to total number of trades expressed in percent 
 		/// ( 100*(NumWinTrades/TotalTrades)).
 		/// </summary>
-		public unsafe double PercentProfit
+		public double PercentProfit
 		{
 			get
 			{
@@ -247,7 +223,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns total number or profitable trades.
 		/// </summary>
-		public unsafe int NumWinTrades
+		public int NumWinTrades
 		{
 			get
 			{
@@ -258,7 +234,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns total number or losing trades.
 		/// </summary>
-		public unsafe int NumLosTrades
+		public int NumLosTrades
 		{
 			get
 			{
@@ -269,7 +245,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns total number of trades that did not bring any profit or loss.
 		/// </summary>
-		public unsafe int NumEvenTrades
+		public int NumEvenTrades
 		{
 			get
 			{
@@ -280,7 +256,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns maximum potential loss (drawdown) during entire trading period.
 		/// </summary>
-		public unsafe double MaxDrawDown
+		public double MaxDrawDown
 		{
 			get
 			{
@@ -291,7 +267,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns maximal number of sequential unprofitable trades.
 		/// </summary>
-		public unsafe int MaxLotsHeld
+		public int MaxLotsHeld
 		{
 			get
 			{
@@ -302,7 +278,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns maximum number of sequential profitable trades.
 		/// </summary>
-		public unsafe int MaxConsecWinners
+		public int MaxConsecWinners
 		{
 			get
 			{
@@ -313,7 +289,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns maximum number of sequential unprofitable trades.
 		/// </summary>
-		public unsafe int MaxConsecLosers
+		public int MaxConsecLosers
 		{
 			get
 			{
@@ -324,7 +300,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns non-negative number with maximum profit of a single trade.
 		/// </summary>
-		public unsafe double LargestWinTrade
+		public double LargestWinTrade
 		{
 			get
 			{
@@ -335,7 +311,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns non-positive number with the maximum loss of a single trade.
 		/// </summary>
-		public unsafe double LargestLosTrade
+		public double LargestLosTrade
 		{
 			get
 			{
@@ -346,7 +322,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns non-negative number that indicates total strategy profit. 
 		/// </summary>
-		public unsafe double GrossProfit
+		public double GrossProfit
 		{
 			get
 			{
@@ -357,7 +333,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns a non-positive number that indicates total strategy loss.
 		/// </summary>
-		public unsafe double GrossLoss
+		public double GrossLoss
 		{
 			get
 			{
@@ -368,7 +344,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns the average length of winning trades in terms of bars.
 		/// </summary>
-		public unsafe double AvgBarsWinTrade
+		public double AvgBarsWinTrade
 		{
 			get
 			{
@@ -379,7 +355,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns the average length of losing trades in terms of bars.
 		/// </summary>
-		public unsafe double AvgBarsLosTrade
+		public double AvgBarsLosTrade
 		{
 			get
 			{
@@ -390,7 +366,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>				
 		/// Returns the average length of even trades (without profit and loss) in terms of bars.
 		/// </summary>
-		public unsafe double AvgBarsEvenTrade
+		public double AvgBarsEvenTrade
 		{
 			get
 			{
@@ -401,7 +377,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns strategy's fixed net profit.
 		/// </summary>
-		public unsafe double NetProfit
+		public double NetProfit
 		{
 			get
 			{
@@ -412,7 +388,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns the interface which provides Portfolio Perfomance.
 		/// </summary>
-		public unsafe IPortfolioPerformance Portfolio
+		public IPortfolioPerformance Portfolio
 		{
 			get
 			{
@@ -461,7 +437,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Returns strategy's market position.
 		/// </summary>
-		public unsafe int PositionSide
+		public int PositionSide
 		{
 			get
 			{
@@ -470,20 +446,13 @@ namespace PowerLanguage.Strategy
 		}
 
 		/// <exclude />
-		protected unsafe SignalObject(object _ctx) : base(_ctx)
+		protected SignalObject(object _ctx) : base(_ctx)
 		{
-		}
-
-		private void _007ESignalObject()
-		{
-			((IDisposable)m_orders_host)?.Dispose();
-			(m_portfolio as IDisposable)?.Dispose();
 		}
 
 		/// <exclude />
 		protected sealed override void BeforeConstructImpl()
 		{
-			m_orders_host.SetConstructPhase();
 			base.BeforeConstructImpl();
 		}
 
@@ -508,8 +477,6 @@ namespace PowerLanguage.Strategy
 		/// <exclude />
 		protected sealed override void PreExecuteImpl()
 		{
-			m_orders_host.SetExecutablePhase();
-			_PreExecuteImpl();
 			m_need_actualize_positions = true;
 		}
 
@@ -518,7 +485,7 @@ namespace PowerLanguage.Strategy
 		{
 		}
 
-		private unsafe void actualize_positions()
+		private void actualize_positions()
 		{
 		}
 
@@ -529,7 +496,7 @@ namespace PowerLanguage.Strategy
 		}
 
 		/// <exclude />
-		protected unsafe void ChangeMarketPosition(int mp_delta, double fill_price, string _name)
+		protected void ChangeMarketPosition(int mp_delta, double fill_price, string _name)
 		{
 		}
 
@@ -544,7 +511,7 @@ namespace PowerLanguage.Strategy
 		/// <summary>
 		/// Assign initial market position at broker for the strategy.
 		/// </summary>
-		protected unsafe void SetInitialBrokerPosition(IOrderObject _entry, int market_pos, double avg_price, double max_op)
+		protected void SetInitialBrokerPosition(IOrderObject _entry, int market_pos, double avg_price, double max_op)
 		{
 		}
 
@@ -561,7 +528,7 @@ namespace PowerLanguage.Strategy
 		/// [ProductName] is name of product, for example, "MultiCharts .NET", "MultiCharts .NET64" etc.
 		/// If there is no such a key, Amount is calculated in the currency of the strategy/Portfolio. 
 		/// </summary>
-		protected unsafe void GenerateStopLoss(double amount)
+		protected void GenerateStopLoss(double amount)
 		{
 		}
 
@@ -578,14 +545,14 @@ namespace PowerLanguage.Strategy
 		/// [ProductName] is name of product, for example, "MultiCharts .NET", "MultiCharts .NET64" etc.
 		/// If there is no such a key, Amount is calculated in the currency of the strategy/Portfolio. 
 		/// </summary>
-		protected unsafe void GenerateProfitTarget(double amount)
+		protected void GenerateProfitTarget(double amount)
 		{
 		}
 
 		/// <summary>
 		/// ExitOnClose order generation.
 		/// </summary>
-		protected unsafe void GenerateExitOnClose()
+		protected void GenerateExitOnClose()
 		{
 		}
 
@@ -602,7 +569,7 @@ namespace PowerLanguage.Strategy
 		/// [ProductName] is name of product, for example, "MultiCharts .NET", "MultiCharts .NET64" etc.
 		/// If there is no such a key, Amount is calculated in the currency of the strategy/Portfolio. 
 		/// </summary>
-		protected unsafe void GenerateBreakEven(double profit)
+		protected void GenerateBreakEven(double profit)
 		{
 		}
 
@@ -620,7 +587,7 @@ namespace PowerLanguage.Strategy
 		/// [ProductName] is name of product, for example, "MultiCharts .NET", "MultiCharts .NET64" etc.
 		/// If there is no such a key, Amount is calculated in the currency of the strategy/Portfolio. 
 		/// </summary>
-		protected unsafe void GenerateDollarTrailing(double profit)
+		protected void GenerateDollarTrailing(double profit)
 		{
 		}
 
@@ -638,7 +605,7 @@ namespace PowerLanguage.Strategy
 		/// [ProductName] is name of product, for example, "MultiCharts .NET", "MultiCharts .NET64" etc.
 		/// If there is no such a key, Amount is calculated in the currency of the strategy/Portfolio. 
 		/// </summary>
-		protected unsafe void GeneratePercentTrailing(double profit, double percentage)
+		protected void GeneratePercentTrailing(double profit, double percentage)
 		{
 		}
 
@@ -646,7 +613,7 @@ namespace PowerLanguage.Strategy
 		/// Market order generation.
 		/// </summary>
 		[return: MarshalAs(UnmanagedType.U1)]
-		protected unsafe bool GenerateATMarketOrder([MarshalAs(UnmanagedType.U1)] bool buy, [MarshalAs(UnmanagedType.U1)] bool entry, int lots)
+		protected bool GenerateATMarketOrder([MarshalAs(UnmanagedType.U1)] bool buy, [MarshalAs(UnmanagedType.U1)] bool entry, int lots)
 		{
 			return false;
 		}
@@ -655,7 +622,7 @@ namespace PowerLanguage.Strategy
 		/// StopLoss order generation.
 		/// Same as <see cref="M:PowerLanguage.Strategy.SignalObject.GenerateStopLoss(System.Double)" />, but amount in points.
 		/// </summary>
-		protected unsafe void GenerateStopLossPt(double amount)
+		protected void GenerateStopLossPt(double amount)
 		{
 		}
 
@@ -663,7 +630,7 @@ namespace PowerLanguage.Strategy
 		/// ProfitTarget order generation.
 		/// Same as <see cref="M:PowerLanguage.Strategy.SignalObject.GenerateProfitTarget(System.Double)" />, but amount in points.
 		/// </summary>
-		protected unsafe void GenerateProfitTargetPt(double amount)
+		protected void GenerateProfitTargetPt(double amount)
 		{
 		}
 
@@ -671,7 +638,7 @@ namespace PowerLanguage.Strategy
 		/// BreakEven order generation.
 		/// Same as <see cref="M:PowerLanguage.Strategy.SignalObject.GenerateBreakEven(System.Double)" />, but amount in points.
 		/// </summary>
-		protected unsafe void GenerateBreakEvenPt(double amount)
+		protected void GenerateBreakEvenPt(double amount)
 		{
 		}
 
@@ -679,7 +646,7 @@ namespace PowerLanguage.Strategy
 		/// TrailingStop order generation.
 		/// Same as <see cref="M:PowerLanguage.Strategy.SignalObject.GenerateDollarTrailing(System.Double)" />, but amount in points.
 		/// </summary>
-		protected unsafe void GenerateTrailingStopPt(double amount)
+		protected void GenerateTrailingStopPt(double amount)
 		{
 		}
 
@@ -687,7 +654,7 @@ namespace PowerLanguage.Strategy
 		/// PercentTrailing order generation.
 		/// Same as <see cref="M:PowerLanguage.Strategy.SignalObject.GeneratePercentTrailing(System.Double,System.Double)" />, but amount in points.
 		/// </summary>
-		protected unsafe void GeneratePercentTrailingPt(double amount, double percentage)
+		protected void GeneratePercentTrailingPt(double amount, double percentage)
 		{
 		}
 
@@ -696,14 +663,7 @@ namespace PowerLanguage.Strategy
 		{
 			if (P_0)
 			{
-				try
-				{
-					_007ESignalObject();
-				}
-				finally
-				{
-					base.Dispose(true);
-				}
+				base.Dispose(true);
 			}
 			else
 			{

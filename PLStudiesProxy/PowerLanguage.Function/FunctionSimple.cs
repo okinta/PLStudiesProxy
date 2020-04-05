@@ -18,11 +18,7 @@ namespace PowerLanguage.Function
 		{
 			get
 			{
-				if (m_calculated)
-				{
-					DoRecoveryVars(my_ds());
-				}
-				return _calculate(barsAgo);
+				throw new NotImplementedException();
 			}
 		}
 
@@ -41,15 +37,6 @@ namespace PowerLanguage.Function
 		public FunctionSimple(CStudyControl master, int dataStream)
 			: base(master, _is_series: true, dataStream)
 		{
-		}
-
-		private void _007EFunctionSimple_00601()
-		{
-		}
-
-		private unsafe T _calculate(int bars_ago)
-		{
-			throw new NotImplementedException();
 		}
 
 		protected override void Dispose([MarshalAs(UnmanagedType.U1)] bool P_0)

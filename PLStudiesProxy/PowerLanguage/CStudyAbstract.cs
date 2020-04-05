@@ -17,31 +17,16 @@ namespace PowerLanguage
 	/// </summary>
 	public abstract class CStudyAbstract : CStudyControl, ITechniqueEEService
 	{
-		private readonly TechCreateContext m_create_ctx;
-
-		private unsafe void* m_host;
-
-		private unsafe DepIndicatorsHolder* m_deps_holder;
-
 		private List<object> m_deps;
 
 		/// <exclude />
-		protected internal int ui_thread_id => m_create_ctx.ui_thread_id;
+		protected internal int ui_thread_id;
 
 		/// <exclude />
-		protected internal unsafe IntPtr host_id => new IntPtr(m_host);
+		protected internal IntPtr host_id;
 
 		/// <exclude />
-		protected unsafe sealed override int StudyDataNumber
-		{
-			get
-			{
-				return 0;
-			}
-		}
-
-		/// <exclude />
-		protected unsafe CStudyAbstract(object _ctx) : base(null, 0)
+		protected CStudyAbstract(object _ctx)
 		{
 		}
 
@@ -60,7 +45,7 @@ namespace PowerLanguage
 			return AddIndicator(name, -1);
 		}
 
-		protected unsafe object AddIndicator(string name, int data_stream)
+		protected object AddIndicator(string name, int data_stream)
 		{
 			throw new NotImplementedException();
 		}
@@ -244,7 +229,6 @@ namespace PowerLanguage
 		/// <exclude />
 		protected virtual void PreExecuteImpl()
 		{
-			_PreExecuteImpl();
 		}
 
 		/// <exclude />
@@ -252,7 +236,7 @@ namespace PowerLanguage
 		{
 		}
 
-		private unsafe void DoExecute()
+		private void DoExecute()
 		{
 		}
 
@@ -266,7 +250,6 @@ namespace PowerLanguage
 		{
 			BeforeConstructImpl();
 			Create();
-			_CallConstruct();
 			AfterConstructImpl();
 		}
 
@@ -278,10 +261,8 @@ namespace PowerLanguage
 
 		private void DoInitialize()
 		{
-			_Initialize();
 			BeforeInitializeImpl();
 			StartCalc();
-			_Call_Initialize();
 			_BeforeCalc_DependentIndicators();
 			AfterInitializeImpl();
 		}
@@ -295,7 +276,6 @@ namespace PowerLanguage
 		private void DoBeforeCalcInit()
 		{
 			StartCalc();
-			_Call_BeforeCalc();
 		}
 
 		void ITechniqueEEService.DoBeforeCalcInit()
@@ -304,7 +284,7 @@ namespace PowerLanguage
 			this.DoBeforeCalcInit();
 		}
 
-		private unsafe void DoDestroy()
+		private void DoDestroy()
 		{
 		}
 
@@ -314,26 +294,12 @@ namespace PowerLanguage
 			this.DoDestroy();
 		}
 
-		private void DoCloseBar(int _ds)
-		{
-			_CloseBar(_ds);
-		}
-
 		void ITechniqueEEService.DoCloseBar(int _ds)
 		{
-			//ILSpy generated this explicit interface implementation from .override directive in DoCloseBar
-			this.DoCloseBar(_ds);
-		}
-
-		private void DoRecovery(int _ds)
-		{
-			_Recovery(_ds);
 		}
 
 		void ITechniqueEEService.DoRecovery(int _ds)
 		{
-			//ILSpy generated this explicit interface implementation from .override directive in DoRecovery
-			this.DoRecovery(_ds);
 		}
 
 		private void DoFinishCalc()
@@ -346,7 +312,6 @@ namespace PowerLanguage
 			{
 				Trace.TraceError(ex.ToString());
 			}
-			_Call_UnInitialize();
 		}
 
 		void ITechniqueEEService.DoFinishCalc()
@@ -355,15 +320,8 @@ namespace PowerLanguage
 			this.DoFinishCalc();
 		}
 
-		private unsafe void DoInitializeVars(IInitIndexes* _indexes)
-		{
-			_Initialize(_indexes);
-		}
-
 		unsafe void ITechniqueEEService.DoInitializeVars(IInitIndexes* _indexes)
 		{
-			//ILSpy generated this explicit interface implementation from .override directive in DoInitializeVars
-			this.DoInitializeVars(_indexes);
 		}
 
 		private void _BeforeCalc_DependentIndicators()
@@ -388,7 +346,7 @@ namespace PowerLanguage
 		/// <exclude />
 		protected unsafe void* host_void_ptr()
 		{
-			return m_host;
+			throw new NotImplementedException();
 		}
 
 		[HandleProcessCorruptedStateExceptions]

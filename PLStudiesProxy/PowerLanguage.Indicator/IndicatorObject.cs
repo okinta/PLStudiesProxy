@@ -75,7 +75,7 @@ namespace PowerLanguage.Indicator
 		/// <summary>A method for a string plot adding with 'info' parameters.
 		/// <seealso cref="T:PowerLanguage.StringPlotAttributes" /></summary>
 		/// <param name="info">Specifies attributes for the new plot object.</param>
-		protected unsafe IPlotObjectStr AddPlot(StringPlotAttributes info)
+		protected IPlotObjectStr AddPlot(StringPlotAttributes info)
 		{
 			throw new NotImplementedException();
 		}
@@ -83,7 +83,7 @@ namespace PowerLanguage.Indicator
 		/// <summary>A method for a plot adding with 'info' parameters.
 		/// <seealso cref="T:PowerLanguage.PlotAttributes" /></summary>
 		/// <param name="info">Specifies attributes for the new plot object.</param>
-		protected unsafe IPlotObject AddPlot(PlotAttributes info)
+		protected IPlotObject AddPlot(PlotAttributes info)
 		{
 			throw new NotImplementedException();
 		}
@@ -94,16 +94,6 @@ namespace PowerLanguage.Indicator
 		{
 			PlotAttributes info = new PlotAttributes(m_plots.Count + 1);
 			return AddPlot(info);
-		}
-
-		private unsafe static SPlotDeclareInfo* PlotInfo2DeclarePlotInfo(SPlotDeclareInfo* P_0, ref StringPlotAttributes info)
-		{
-			throw new NotImplementedException();
-		}
-
-		private unsafe static SPlotDeclareInfo* PlotInfo2DeclarePlotInfo(SPlotDeclareInfo* P_0, ref PlotAttributes info)
-		{
-			throw new NotImplementedException();
 		}
 
 		[HandleProcessCorruptedStateExceptions]

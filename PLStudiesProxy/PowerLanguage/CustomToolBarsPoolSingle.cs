@@ -10,11 +10,6 @@ namespace PowerLanguage
 
 		public static CustomToolBarsPoolSingle Instance => s_this;
 
-		protected sealed override CustomToolBar create_tb(IntPtr _h)
-		{
-			return new CustomToolBarImpl(_h);
-		}
-
 		private CustomToolBarsPoolSingle()
 		{
 		}
@@ -31,6 +26,11 @@ namespace PowerLanguage
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
+		}
+
+		protected override CustomToolBar create_tb(IntPtr _h)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

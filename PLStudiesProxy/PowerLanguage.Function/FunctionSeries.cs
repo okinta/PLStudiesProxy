@@ -56,7 +56,7 @@ namespace PowerLanguage.Function
 		{
 		}
 
-		private unsafe void _calculate([MarshalAs(UnmanagedType.U1)] bool _recover_first)
+		private void _calculate([MarshalAs(UnmanagedType.U1)] bool _recover_first)
 		{
 		}
 
