@@ -1,10 +1,10 @@
-using PowerLanguage;
 using PowerLanguage.Strategy;
+using PowerLanguage;
 using Xunit;
 
 namespace Tests
 {
-    class MyStrategy : SignalObject
+    internal class MyStrategy : SignalObject
     {
         [Input]
         public bool IsAlive { get; set; }
@@ -19,10 +19,10 @@ namespace Tests
         }
     }
 
-    public class UnitTest1
+    public class StrategyTest
     {
         [Fact]
-        public void Test1()
+        public void TestCanInstantiate()
         {
             var strategy = new MyStrategy("");
             Assert.True(strategy.IsAlive);
