@@ -14,7 +14,10 @@ namespace PowerLanguage
 		/// </summary>
 		public string Name { get; protected set; }
 
-		protected List<IInstrument> BarsData { get; set; }
+		/// <summary>
+		/// Collection of base instruments.
+		/// </summary>
+		protected IList<IInstrument> BarsData { get; set; }
 
 		/// <summary>
 		/// Read-only property. Returns base instrument. 
