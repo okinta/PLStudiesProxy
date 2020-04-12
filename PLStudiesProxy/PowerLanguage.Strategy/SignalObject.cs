@@ -9,7 +9,7 @@ namespace PowerLanguage.Strategy
 	/// </summary>
 	public abstract class SignalObject : CStudyAbstract, IStrategy
 	{
-		protected SignalObject(object _ctx)
+		protected SignalObject(object _)
 		{
 		}
 
