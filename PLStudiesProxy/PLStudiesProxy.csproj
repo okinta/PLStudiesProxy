@@ -1,7 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+    <Version>1.0.1</Version>
+    <Description>Drop-in replacement for MultiChart .NET's PLStudiesProxy.dll</Description>
+    <Authors>Okinta IT LLC</Authors>
+    <Company>Okinta IT LLC</Company>
+    <Copyright>© 2020 Okinta IT LLC</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/okinta/PLStudiesProxy</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,6 +27,13 @@
     <Reference Include="PLTypes">
       <HintPath>C:\Program Files\TS Support\MultiCharts .NET64\PLTypes.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
