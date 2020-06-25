@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Description>Drop-in replacement for MultiChart .NET's PLStudiesProxy.dll</Description>
     <Authors>Okinta IT LLC</Authors>
     <Company>Okinta IT LLC</Company>
